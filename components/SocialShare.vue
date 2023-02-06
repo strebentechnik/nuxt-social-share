@@ -1,27 +1,21 @@
-<script lang="ts">
-export default {
-  data() {
-    return {
-      message: "",
-    };
-  },
-  methods: {
-    copyUrl() {
-      navigator.clipboard.writeText(window.location.href);
-      this.message = "URL copied to clipboard";
-    },
-    cancelCopy() {
-      this.message = "";
-    },
-    shareLink(webURL: any) {
-      const currentUrl = "https://code-easy.netlify.app";
-      window.open(`${webURL}${currentUrl}`);
-    },
-    // const currentUrl = window.location.href;
-  },
+<script lang="ts" setup>
+import { ref } from "vue";
+
+const message = ref("");
+const copyUrl = () => {
+  navigator.clipboard.writeText(window.location.href);
+  message.value = "URL copied to clipboard";
+};
+
+const cancelCopy = () => {
+  message.value = "";
+};
+
+const shareLink = (webURL: any) => {
+  const currentUrl = window.location.href;
+  window.open(`${webURL}${currentUrl}`);
 };
 </script>
-
 <template>
   <div
     class="relative z-10"
@@ -42,10 +36,10 @@ export default {
         >
           <div>
             <div
-              class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#eff6ff]"
+              class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-50"
             >
               <svg
-                class="w-6 h-6 text-[#002659]"
+                class="w-6 h-6 text-blue-900"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -60,11 +54,11 @@ export default {
               </svg>
             </div>
             <div class="mt-2 text-center sm:mt-5">
-              <h3 class="text-xl font-normal tracking-wide text-[#7c828e]">
+              <h3 class="text-xl font-normal tracking-wide text-gray-500">
                 Link Sharing
               </h3>
               <div
-                class="mt-2 flex flex-grow items-center justify-around text-[#7c828e]"
+                class="mt-2 flex flex-grow items-center justify-around text-gray-500"
               >
                 <div>
                   <button
@@ -152,14 +146,14 @@ export default {
           >
             <button
               type="button"
-              class="inline-flex w-full justify-center rounded-md border border-transparent bg-[#002659] px-4 py-2 text-lg font-normal text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
+              class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-900 px-4 py-2 text-lg font-normal text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
               @click="copyUrl"
             >
               Copy URL
             </button>
             <button
               type="button"
-              class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-normal text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+              class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-400 bg-white px-4 py-2 text-base font-normal text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
               @click="cancelCopy"
             >
               Cancel
