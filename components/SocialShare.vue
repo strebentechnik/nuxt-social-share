@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-const message = ref("");
+const buttonText = ref("Copy URL");
 const copyUrl = () => {
   navigator.clipboard.writeText(window.location.href);
-  message.value = "URL copied to clipboard";
+  buttonText.value = "Copied";
+  setTimeout(() => {
+    buttonText.value = "Copy URL";
+  }, 3000);
 };
-
-const cancelCopy = () => {
-  message.value = "";
-};
-
 const shareLink = (webURL: any) => {
   const currentUrl = window.location.href;
   window.open(`${webURL}${currentUrl}`);
@@ -147,19 +145,15 @@ const shareLink = (webURL: any) => {
               class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-900 px-4 py-2 text-lg font-normal text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
               @click="copyUrl"
             >
-              Copy URL
+              {{ buttonText }}
             </button>
             <button
               type="button"
               class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-400 bg-white px-4 py-2 text-base font-normal text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-              @click="cancelCopy"
             >
               Cancel
             </button>
           </div>
-          <p v-if="message" class="text-center pt-6 text-green-500">
-            {{ message }}
-          </p>
         </div>
       </div>
     </div>
