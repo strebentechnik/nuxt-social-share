@@ -1,13 +1,21 @@
-<script setup lang="ts">
-interface SocialProps {
-  url: string;
-}
+<script lang="ts" setup>
+import { ref } from "vue";
 
-const props = withDefaults(defineProps<SocialProps>(), {
-  url: "",
-});
+const message = ref("");
+const copyUrl = () => {
+  navigator.clipboard.writeText(window.location.href);
+  message.value = "URL copied to clipboard";
+};
+
+const cancelCopy = () => {
+  message.value = "";
+};
+
+const shareLink = (webURL: any) => {
+  const currentUrl = window.location.href;
+  window.open(`${webURL}${currentUrl}`);
+};
 </script>
-
 <template>
   <div
     class="relative z-10"
@@ -21,17 +29,17 @@ const props = withDefaults(defineProps<SocialProps>(), {
 
     <div class="fixed inset-0 z-10 overflow-y-auto">
       <div
-        class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        class="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0"
       >
         <div
-          class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+          class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 w-96 sm:w-full sm:max-w-lg sm:p-6"
         >
           <div>
             <div
-              class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+              class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-50"
             >
               <svg
-                class="w-6 h-6 text-violet-500"
+                class="w-6 h-6 text-blue-900"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -45,75 +53,115 @@ const props = withDefaults(defineProps<SocialProps>(), {
                 ></path>
               </svg>
             </div>
-            <div class="mt-3 text-center sm:mt-5">
-              <h3
-                class="text-lg font-medium leading-6 text-gray-900"
-                id="modal-title"
-              >
+            <div class="mt-2 text-center sm:mt-5">
+              <h3 class="text-xl font-normal tracking-wide text-gray-500">
                 Link Sharing
               </h3>
-              <div class="mt-2 flex flex-grow items-center justify-around">
-                <button
-                  type="button"
-                  class="inline-flex items-center rounded-full border border-transparent bg-indigo-600 p-3 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <!-- Heroicon name: outline/plus -->
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
+              <div
+                class="mt-2 flex flex-grow items-center justify-around text-gray-500"
+              >
+                <div>
+                  <button
+                    type="button"
+                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
+                    @click="
+                      shareLink(
+                        `https://www.linkedin.com/sharing/share-offsite/?url=`
+                      )
+                    "
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
+                    <img
+                      src="../assets/images/linkedin.png"
+                      alt=""
+                      class="h-6 w-6"
                     />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  class="inline-flex items-center rounded-full border border-transparent bg-indigo-600 p-3 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <!-- Heroicon name: outline/plus -->
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
+                  </button>
+                  <h1 class="pt-3 md:text-sm text-xs">LinkedIn</h1>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
+                    @click="shareLink(`https://twitter.com/intent/tweet?url=`)"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
+                    <img
+                      src="../assets/images/twitter.png"
+                      alt=""
+                      class="h-6 w-6"
                     />
-                  </svg>
-                </button>
+                  </button>
+                  <h1 class="pt-3 md:text-sm text-xs">Twitter</h1>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
+                    @click="
+                      shareLink(
+                        `https://www.facebook.com/dialog/share?app_id=87741124305&href=`
+                      )
+                    "
+                  >
+                    <img
+                      src="../assets/images/facebook.png"
+                      alt=""
+                      class="h-6 w-6"
+                    />
+                  </button>
+                  <h1 class="pt-3 md:text-sm text-xs">Facebook</h1>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
+                    @click="shareLink(`https://api.whatsapp.com/send/?text=`)"
+                  >
+                    <img
+                      src="../assets/images/whatsapp.png"
+                      alt=""
+                      class="h-6 w-6"
+                    />
+                  </button>
+                  <h1 class="pt-3 md:text-sm text-xs">Whatsapp</h1>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
+                    @click="shareLink(`mailto:?subject=job&body=`)"
+                  >
+                    <img
+                      src="../assets/images/mail.png"
+                      alt=""
+                      class="h-6 w-6"
+                    />
+                  </button>
+                  <h1 class="pt-3 md:text-sm text-xs">Mail</h1>
+                </div>
               </div>
             </div>
           </div>
           <div
-            class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3"
+            class="mt-5 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3"
           >
             <button
               type="button"
-              class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
+              class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-900 px-4 py-2 text-lg font-normal text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
+              @click="copyUrl"
             >
               Copy URL
             </button>
             <button
               type="button"
-              class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+              class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-400 bg-white px-4 py-2 text-base font-normal text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+              @click="cancelCopy"
             >
               Cancel
             </button>
           </div>
+          <p v-if="message" class="text-center pt-6 text-green-500">
+            {{ message }}
+          </p>
         </div>
       </div>
     </div>
