@@ -11,18 +11,41 @@ const shareLink = (webURL: any) => {
   const currentUrl = window.location.href;
   window.open(`${webURL}${currentUrl}`);
 };
+const items = [
+  {
+    id: 1,
+    image: "/_nuxt/assets/images/linkedin.png",
+    text: "LinkedIn",
+    link: "https://www.linkedin.com/sharing/share-offsite/?url=",
+  },
+  {
+    id: 2,
+    image: "/_nuxt/assets/images/twitter.png",
+    text: "Twitter",
+    link: "https://twitter.com/intent/tweet?url=",
+  },
+  {
+    id: 3,
+    image: "/_nuxt/assets/images/facebook.png",
+    text: "Facebok",
+    link: "https://www.facebook.com/dialog/share?app_id=87741124305&href=",
+  },
+  {
+    id: 4,
+    image: "/_nuxt/assets/images/whatsapp.png",
+    text: "Whatsapp",
+    link: "https://api.whatsapp.com/send/?text=",
+  },
+  {
+    id: 5,
+    image: "/_nuxt/assets/images/mail.png",
+    text: "Mail",
+    link: "mailto:?subject=job&body=",
+  },
+];
 </script>
 <template>
-  <div
-    class="relative z-10"
-    aria-labelledby="modal-title"
-    role="dialog"
-    aria-modal="true"
-  >
-    <div
-      class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-    ></div>
-
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
     <div class="fixed inset-0 z-10 overflow-y-auto">
       <div
         class="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0"
@@ -53,87 +76,27 @@ const shareLink = (webURL: any) => {
               <h3 class="text-xl font-normal tracking-wide text-gray-500">
                 Link Sharing
               </h3>
-              <div
-                class="mt-2 flex flex-grow items-center justify-around text-gray-500"
-              >
-                <div>
-                  <button
-                    type="button"
-                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
-                    @click="
-                      shareLink(
-                        `https://www.linkedin.com/sharing/share-offsite/?url=`
-                      )
-                    "
-                  >
-                    <img
-                      src="../assets/images/linkedin.png"
-                      alt=""
-                      class="h-6 w-6"
-                    />
-                  </button>
-                  <h1 class="pt-3 md:text-sm text-xs">LinkedIn</h1>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
-                    @click="shareLink(`https://twitter.com/intent/tweet?url=`)"
-                  >
-                    <img
-                      src="../assets/images/twitter.png"
-                      alt=""
-                      class="h-6 w-6"
-                    />
-                  </button>
-                  <h1 class="pt-3 md:text-sm text-xs">Twitter</h1>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
-                    @click="
-                      shareLink(
-                        `https://www.facebook.com/dialog/share?app_id=87741124305&href=`
-                      )
-                    "
-                  >
-                    <img
-                      src="../assets/images/facebook.png"
-                      alt=""
-                      class="h-6 w-6"
-                    />
-                  </button>
-                  <h1 class="pt-3 md:text-sm text-xs">Facebook</h1>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
-                    @click="shareLink(`https://api.whatsapp.com/send/?text=`)"
-                  >
-                    <img
-                      src="../assets/images/whatsapp.png"
-                      alt=""
-                      class="h-6 w-6"
-                    />
-                  </button>
-                  <h1 class="pt-3 md:text-sm text-xs">Whatsapp</h1>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    class="inline-flex items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
-                    @click="shareLink(`mailto:?subject=job&body=`)"
-                  >
-                    <img
-                      src="../assets/images/mail.png"
-                      alt=""
-                      class="h-6 w-6"
-                    />
-                  </button>
-                  <h1 class="pt-3 md:text-sm text-xs">Mail</h1>
-                </div>
+              <div class="mt-2 items-center text-gray-500">
+                <ul class="flex justify-around">
+                  <li v-for="item in items" :key="item.id">
+                    <div>
+                      <button
+                        type="button"
+                        class="items-center rounded-full border border-transparent bg-white p-3 text-white shadow-md"
+                        @click="shareLink(item.link)"
+                      >
+                        <div>
+                          <img :src="item.image" alt="" class="h-6 w-6" />
+                        </div>
+                      </button>
+                    </div>
+                    <div>
+                      <h1 class="md:text-sm text-xs inline-flex mt-4">
+                        {{ item.text }}
+                      </h1>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
